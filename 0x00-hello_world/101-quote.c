@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <unistd.h>
-/*
- * main - a code that prints standard error to screen
+/**
+ * main - Entry point
  *
- * Return: 1 this time
+ * Return: Always 1 (Success)
  */
 int main(void)
-{	fputs("and that piece of art is useful\" - Dora Korpar, 2015-10-19\n", stdout);
+{	fputs("and that piece of art is useful\" - Dora Korpar, 2015-10-19", stdout);
 	return (1);
 }
