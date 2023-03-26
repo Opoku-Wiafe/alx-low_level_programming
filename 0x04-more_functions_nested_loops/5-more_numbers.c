@@ -1,6 +1,10 @@
 #include "main.h"
 /**
+ * more_numbers - Entry point
+ *
+ * Reurn: always 0.
  */
+
 void more_numbers(void)
 {
 	int i, j;
@@ -13,7 +17,7 @@ void more_numbers(void)
 			{
 				_putchar((j / 10) + '0');
 			}
-			_putchar((j % 10) +'0');
+			_putchar((j % 10) + '0');
 		}
 		_putchar('\n');
 	}
