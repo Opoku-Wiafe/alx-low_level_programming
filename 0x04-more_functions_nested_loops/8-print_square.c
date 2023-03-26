@@ -1,4 +1,10 @@
 #include "main.h"
+/**
+ * print_square - Main entry
+ * @size: main parameter
+ * Return: return 0.
+ */
+
 void print_square(int size)
 {
 	int x, y;
