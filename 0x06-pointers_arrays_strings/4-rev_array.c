@@ -1,24 +1,19 @@
 #include "main.h"
 /**
  * reverse_array - reverse array
- * @a: the array 
+ * @a: the array
  * @n: index of the array to swap
  * Return: Null
  */
 
 void reverse_array(int *a, int n)
 {
-	int i;
+	int i, temp;
 
-	i = 0;
-	while (i < n)
+	for (i = n - 1; i >= n / 2; i--)
 	{
-		if (i != 0)
-		{
-			printf(", ");
-		}
-		printf("%d", a[i]);
-		i++
+		temp = a[n - 1 - i];
+		a[n - 1 - i] = a[i];
+		a[i] = temp;
 	}
-	printf("\n");
 }
