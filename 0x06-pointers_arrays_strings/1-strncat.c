@@ -1,6 +1,6 @@
 #include "main.h"
 /**
- * _strcat - concatenate two strings
+ * _strncat - concatenate two strings
  * @dest: first parameter
  * @src: second parameter of the program.
  * @n: the index of array.
