@@ -1,36 +1,30 @@
 #include "main.h"
 /**
- * _helper - Supporting function.
- * @n1: the 1 parameter
- * @pSqrt: Second parameter
- * Return: -1 true else _helper
+ * square_root - Supporting function.
+ * @n: the 1 parameter
+ * @i: Second parameter
+ * Return: -1 true else square_root
  */
 
-int _helper(int n1, int pSqrt)
+int square_root(int n, int i)
 {
-	if ((pSqrt * pSqrt) == n1)
-	{
-		return (pSqrt);
-	}
+	if (i * i == n)
+		return (i);
+	if (i * i <= n)
+		return (square_root(n, i + 1));
 	else
-	{
-		if ((pSqrt pSqrt) > n1)
-			return (-1);
-		else
-			return (_helper(n1, pSqrt + 1));
-	}
+		return (-1);
 }
-
 /**
  * _sqrt_recursion - Check for sqrts
  * @n: parameter for checking
  * Return: return -1 if false 0 if true.
  */
-
 int _sqrt_recursion(int n)
 {
 	if (n < 0)
 		return (-1);
-	else
-		return (_helper(n, 0));
+	if (n == 0 || n == 1)
+		return (n);
+	return (square_root(n, 2));
 }
