@@ -9,5 +9,7 @@ int **alloc_grid(int width, int height);
 void free_grid(int **grid, int height);
 #include <stdlib.h>
 #include <stdio.h>
+char *argstostr(int ac, char **av);
+
 
 #endif
