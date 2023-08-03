@@ -1,6 +1,6 @@
 #include "main.h"
 /**
- * square_root - Supporting function for root check.
+ * square_root - Supporting function for root check if true.
  * @n: the 1 parameter
  * @i: Second parameter
  * Return: -1 true else square_root
