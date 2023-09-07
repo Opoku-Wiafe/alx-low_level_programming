@@ -11,7 +11,7 @@
 int append_text_to_file(const char *filename, char *text_content)
 {
 	int fdis;
-	long unsigned int  numWrite;
+	unsigned long  numWrite;
 	size_t length;
 
 	if (filename == NULL)
