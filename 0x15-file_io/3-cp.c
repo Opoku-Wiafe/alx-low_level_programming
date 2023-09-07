@@ -1,5 +1,5 @@
 #include "main.h"
-#define BUFFER_SIZE 1024
+void check_i_o(int stat, int fdis, char *filename, char mode);
 /**
  * main - function to copies the content of one file to another
  * @argc: argument count
@@ -7,47 +7,61 @@
  *
  * Return: 1 on success, exit otherwise
  */
-
 int main(int argc, char *argv[])
 {
-	char buffer[BUFFER_SIZE];
-	ssize_t bytes_read;
-	ssize_t bytes_written;
-	int fdis_from, fdis_to;
+	int source, dest, num_read = 1024, old_write, close_src, close_dest;
+	unsigned int mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH;
+	char buffer[1024];
 
 	if (argc != 3)
-	{	dprintf(STDERR_FILENO, "Usage: %s file_from file_to\n", argv[0]);
-			exit(97);
+	{
+		dprintf(STDERR_FILENO, "%s", "Usage: cp file_from file_to\n");
+		exit(97);
 	}
-	fdis_from = open(argv[1], O_RDONLY);
-	if (fdis_from == -1)
-	{	dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
-			exit(98);
+	source = open(argv[1], O_RDONLY);
+	check_i_o(source, -1, argv[1], 'O');
+	dest = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, mode);
+	check_i_o(dest, -1, argv[2], 'W');
+	while (num_read == 1024)
+	{
+		num_read = read(source, buffer, sizeof(buffer));
+		if (num_read == -1)
+			check_i_o(-1, -1, argv[1], 'O');
+		old_write = write(dest, buffer, num_read);
+		if (old_write == -1)
+			check_i_o(-1, -1, argv[2], 'W');
 	}
-fdis_to = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC,
-		S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-	if (fdis_to == -1)
-	{	dprintf(STDERR_FILENO, "Error: Can't write to file %s\n", argv[2]);
-			exit(99);
-	}
-	while ((bytes_read = read(fdis_from, buffer, BUFFER_SIZE)) > 0)
-	{	bytes_written = write(fdis_to, buffer, bytes_read);
-		if (bytes_written != bytes_read)
-		{	dprintf(STDERR_FILENO, "Error: Can't write to file %s\n", argv[2]);
-				exit(99);
-		}
-	}
-	if (bytes_read == -1)
-	{	dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
-			exit(98);
-	}
-	if (close(fdis_from) == -1)
-	{	dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fdis_from);
-			exit(100);
-	}
-	if (close(fdis_to) == -1)
-	{	dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fdis_to);
-			exit(100);
-	}
+	close_src = close(source);
+	check_i_o(close_src, source, NULL, 'C');
+	close_dest = close(dest);
+	check_i_o(close_dest, dest, NULL, 'C');
 	return (0);
+}
+
+/**
+ * check_i_o - function to determine if its a editable
+ * @stat: file descriptor
+ * @filename: name of the file to be checked
+ * @mode: start of thr function or close
+ * @fdis: file descriptor
+ *
+ * Return: void or Nothing
+ */
+void check_i_o(int stat, int fdis, char *filename, char mode)
+{
+	if (mode == 'C' && stat == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fdis);
+		exit(100);
+	}
+	else if (mode == 'O' && stat == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", filename);
+		exit(98);
+	}
+	else if (mode == 'W' && stat == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", filename);
+		exit(99);
+	}
 }
