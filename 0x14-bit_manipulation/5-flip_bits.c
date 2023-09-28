@@ -7,15 +7,16 @@
  */
 unsigned int flip_bits(unsigned long int n, unsigned long int m)
 {
-	int used;
-	unsigned long int xclu_or = n ^ m;
 	unsigned int i = 0;
 
-	while (xclu_or)
+	while (n != 0 || m != 0)
 	{
-		i++;
-		used = (xclu_or - 1);
-		xclu_or = xclu_or & used;
+		if ((n & 1) != (m & 1))
+		{
+			i++;
+		}
+		n >>= 1;
+		m >>= 1;
 	}
 	return (i);
 }
