@@ -11,7 +11,7 @@ size_t dlistint_len(const dlistint_t *h)
 	const dlistint_t *current = h;
 	int count_node;
 
-	for (i = 0; current; i++)
+	for (count_node = 0; current; count_node++)
 	{
 		current = current->next;
 	}
